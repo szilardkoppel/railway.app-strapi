@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
+  "packageManager": "bun@1.1.29",
   "scripts": {
     "build": "strapi build",
     "deploy": "strapi deploy",
