@@ -1,61 +1,55 @@
-# 🚀 Getting started with Strapi
+# Strapi 5 on Railway
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+A production-ready [Strapi 5](https://strapi.io) template for [Railway](https://railway.com), running on the latest Strapi with PostgreSQL.
 
-### `develop`
+## What's included
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+- **Strapi 5** (TypeScript) with the users-permissions plugin
+- **PostgreSQL** via Railway's `postgres-ssl` service, connected over the private network with `DATABASE_URL`
+- **Health check** at `/_health` (Strapi built-in) wired into Railway's deploy health check
+- **Optional Cloudinary uploads** — set `CLOUDINARY_NAME`, `CLOUDINARY_KEY`, and `CLOUDINARY_SECRET` to switch the upload provider from the local filesystem to Cloudinary
+- **Infrastructure as Code** — the Railway project (services, variables, health check) is described in [`.railway/railway.ts`](.railway/railway.ts)
 
-```
+## Deploy on Railway
+
+Deploy from the template, or manually:
+
+1. Create a project with a PostgreSQL database.
+2. Add a service from this repo and set the variables below.
+3. Generate a public domain for the service.
+
+### Required variables
+
+| Variable | Value |
+|---|---|
+| `DATABASE_CLIENT` | `postgres` |
+| `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` |
+| `URL` | `https://${{RAILWAY_PUBLIC_DOMAIN}}` |
+| `HOST` | `::` |
+| `APP_KEYS` | four comma-separated random secrets |
+| `API_TOKEN_SALT` | random secret |
+| `ADMIN_JWT_SECRET` | random secret |
+| `TRANSFER_TOKEN_SALT` | random secret |
+| `JWT_SECRET` | random secret |
+| `ENCRYPTION_KEY` | random secret |
+
+Generate secrets with `openssl rand -base64 32`.
+
+> **Note:** uploaded media is stored on the container filesystem by default and does not survive redeploys. Either configure Cloudinary (variables above) or mount a Railway volume at `/app/public/uploads`.
+
+## Local development
+
+```bash
+cp .env.example .env   # fill in the secrets
+npm install
 npm run develop
-# or
-yarn develop
 ```
 
-### `start`
+Uses SQLite locally by default; set `DATABASE_CLIENT=postgres` and `DATABASE_URL` to develop against Postgres.
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+## Scripts
 
-```
-npm run start
-# or
-yarn start
-```
-
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
-```
-
-## ⚙️ Deployment
-
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
-
-```
-yarn strapi deploy
-```
-
-## 📚 Learn more
-
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+- `npm run develop` — dev server with admin hot reload
+- `npm run build` — build the admin panel
+- `npm run start` — production server
+- `npm run upgrade` — upgrade Strapi to the latest version

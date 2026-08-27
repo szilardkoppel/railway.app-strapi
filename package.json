@@ -1,37 +1,45 @@
 {
-  "name": "strapi",
+  "name": "railway-strapi-template",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
   "scripts": {
     "build": "strapi build",
+    "console": "strapi console",
     "deploy": "strapi deploy",
+    "dev": "strapi develop",
     "develop": "strapi develop",
     "start": "strapi start",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.11.3",
-    "@strapi/plugin-users-permissions": "5.11.3",
-    "@strapi/provider-upload-cloudinary": "5.11.3",
-    "@strapi/strapi": "5.11.3",
-    "pg": "8.8.0",
+    "@strapi/database": "5.52.2",
+    "@strapi/plugin-cloud": "5.52.2",
+    "@strapi/plugin-users-permissions": "5.52.2",
+    "@strapi/provider-upload-cloudinary": "^5.52.2",
+    "@strapi/strapi": "5.52.2",
+    "better-sqlite3": "12.8.0",
+    "pg": "^8.23.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
-    "strapi-health-plugin": "^1.1.0",
+    "react-router-dom": "^6.30.3",
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "railway": "^3.11.0",
     "typescript": "^5"
   },
   "engines": {
-    "node": "20"
+    "node": ">=20.0.0 <=26.x.x",
+    "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "fbaf61cd-dcdc-45ae-bf43-8781f5861c55"
+    "uuid": "7afa5522-80b3-434a-b165-e66447a0df53",
+    "installId": "7666306f20c1c147a6d6dc86e2ffb7606915be8abd3aa9c02c8fe298ceef37e6"
   }
 }
